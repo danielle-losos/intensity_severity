@@ -157,27 +157,22 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
-def main() -> None:
-    args = parse_args()
-    gdf, summary = compute_single_fire_metrics(
-        viirs_gpkg=args.viirs_gpkg,
-        fire_id=args.fire_id,
-        fire_name=args.fire_name,
-        fire_date=args.fire_date,
-        cbi_dir=args.cbi_dir,
-    )
+args = parse_args()
+gdf, summary = compute_single_fire_metrics(
+    viirs_gpkg=args.viirs_gpkg,
+    fire_id=args.fire_id,
+    fire_name=args.fire_name,
+    fire_date=args.fire_date,
+    cbi_dir=args.cbi_dir,
+)
 
-    args.output_dir.mkdir(parents=True, exist_ok=True)
-    safe_fire_name = args.fire_name.replace(" ", "_")
-    gdf.to_file(args.output_dir / f"{safe_fire_name}_viirs_singlefire_metrics.gpkg", driver="GPKG")
-    summary.to_csv(args.output_dir / f"{safe_fire_name}_summary_stats.csv", index=False)
+args.output_dir.mkdir(parents=True, exist_ok=True)
+safe_fire_name = args.fire_name.replace(" ", "_")
+gdf.to_file(args.output_dir / f"{safe_fire_name}_viirs_singlefire_metrics.gpkg", driver="GPKG")
+summary.to_csv(args.output_dir / f"{safe_fire_name}_summary_stats.csv", index=False)
 
-    make_figures(gdf, args.output_dir, safe_fire_name)
+make_figures(gdf, args.output_dir, safe_fire_name)
 
-    print("✅ Wrote outputs:")
-    print(f"  - {args.output_dir / f'{safe_fire_name}_viirs_singlefire_metrics.gpkg'}")
-    print(f"  - {args.output_dir / f'{safe_fire_name}_summary_stats.csv'}")
-
-
-if __name__ == "__main__":
-    main()
+print("✅ Wrote outputs:")
+print(f"  - {args.output_dir / f'{safe_fire_name}_viirs_singlefire_metrics.gpkg'}")
+print(f"  - {args.output_dir / f'{safe_fire_name}_summary_stats.csv'}")

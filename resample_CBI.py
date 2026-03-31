@@ -109,17 +109,12 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
-def main() -> None:
-    args = parse_args()
-    create_annual_cbi_rasters(
-        input_raster=args.input_raster,
-        output_dir=args.output_dir,
-        start_year=args.start_year,
-        end_year=args.end_year,
-        target_crs=args.target_crs,
-        target_res=args.target_res,
-    )
-
-
-if __name__ == "__main__":
-    main()
+args = parse_args()
+create_annual_cbi_rasters(
+    input_raster=args.input_raster,
+    output_dir=args.output_dir,
+    start_year=args.start_year,
+    end_year=args.end_year,
+    target_crs=args.target_crs,
+    target_res=args.target_res,
+)
